@@ -1,0 +1,37 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: 'JetBrains Mono', 'sans-serif';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 3em;
+}
+
+.social-links {
+    list-style-type: none;
+    padding: 0;
+}
+
+.social-links li {
+    margin: 10px 0;
+}
+
+.social-links a {
+    color: #00aaff;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}
