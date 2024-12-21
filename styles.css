@@ -15,8 +15,11 @@ body {
 
 h1 {
     font-size: 3em;
-    text-shadow: 0 0 5px red, 0 0 10px red, 0 0 15px red; /* Добавлено свечение */
+    text-shadow: 
+        0 0 3px red,   /* Мягкое свечение */
+        0 0 5px red;   /* Немного более сильное свечение */
 }
+
 
 .social-links {
     list-style-type: none;
