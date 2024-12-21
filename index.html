@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GaferFx ⁂video</title>
+    <title>GaferFx ⁂</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
@@ -21,6 +21,7 @@
                 --text: #ffffff;
                 --text-secondary: #a0a0a0;
                 --link: #66b3ff;
+
             }
         }
 
@@ -55,14 +56,26 @@
             z-index: -1;
             display: block;
             filter: blur(8px);
-        }
+            opacity: 1;
+            transition: 
+            opacity 0.3s ease, 
+            filter 0.3s ease, 
+            brightness 0.3s ease; /* Добавьте это */
+}
 
         @media (prefers-color-scheme: light) {
-    #myVideo {
-        opacity: 0.3; /* Делаем видео полупрозрачным */
-        filter: brightness(150%) blur(5px); /* Увеличиваем яркость и добавляем легкое размытие */
-    }
-}
+            #myVideo {
+                opacity: 0.3;
+                filter: brightness(100%) blur(10px);
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            #myVideo {
+                filter: brightness(0.3) blur(10px);
+                opacity: 1;
+            }
+        }
 
 
         /* Контейнер с контентом */
@@ -128,6 +141,7 @@
             align-items: center;
             justify-content: center;
             transition: background-color 0.3s ease, color 0.3s ease; /* Добавьте эту строку */
+
         }
 
         .video-grid {
@@ -145,6 +159,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             transition: color 0.3s ease;
+            
         }
 
         .video-item:hover {
@@ -191,7 +206,9 @@
             align-items: center;
             padding: 10px 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+}
+
+
 
         @media (prefers-color-scheme: dark) {
             .header {
@@ -204,39 +221,45 @@
             opacity: 1;
             transform: translateY(0);
             animation: fadeSlideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+        .header.hide {
+            opacity: 0;
+            transform: translateY(-100%);
         }
 
+
+
         .container-header {
-    display: flex;
-    align-items: center;
+            display: flex;
+            align-items: center;
 }
 
-.container-header h1 {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-    font-size: 1.2rem;
-    margin-bottom: 0;
-    height: 100%; /* Важная строка */
-    line-height: 1;
-}
+        .container-header h1 {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            font-size: 1.2rem;
+            margin-bottom: 0;
+            height: 100%; /* Важная строка */
+            line-height: 1;
+        }
 
-.links-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
+        .links-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-.links-header a {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.9rem;
-    line-height: 1;
-}
+        .links-header a {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            line-height: 1;
+        }
 
-.links-header svg {
-    vertical-align: middle;
+        .links-header svg {
+            vertical-align: middle;
 }
 
         /* Анимации */
@@ -262,25 +285,25 @@
         }
     </style>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const header = document.querySelector('.header');
-            const firstScreen = document.querySelector('.first-screen');
+<script>
+ document.addEventListener('DOMContentLoaded', function() {
+    const header = document.querySelector('.header');
+    const firstScreen = document.querySelector('.first-screen');
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (!entry.isIntersecting) {
-                        header.classList.add('show');
-                    } else {
-                        header.classList.remove('show');
-                    }
-                });
-            }, {
-                threshold: 0
-            });
-
-            observer.observe(firstScreen);
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                header.classList.add('show');
+            } else {
+                header.classList.remove('show');
+            }
         });
+    }, {
+        threshold: 0
+    });
+
+    observer.observe(firstScreen);
+});
     </script>
 </head>
 <body>
@@ -308,7 +331,7 @@
     <!-- Первый экран -->
     <div class="first-screen">
         <video autoplay muted loop id="myVideo">
-            <source src="forsite20.mp4" type="video/mp4">
+            <source src="forsite200.mp4" type="video/mp4">
             Ваш браузер не поддерживает видео.
         </video>
 
@@ -369,6 +392,13 @@
                 </a>
             </div>
         </div>
+        <div style="min-height: 100vh; background-color: var(--background); padding: 2rem;">
+    <!-- Можете добавить еще несколько таких блоков -->
+    <div style="height: 500px; background-color: rgba(0,0,0,0.1); margin: 20px 0;"></div>
+    <div style="height: 500px; background-color: rgba(0,0,0,0.2); margin: 20px 0;"></div>
+    <div style="height: 500px; background-color: rgba(0,0,0,0.3); margin: 20px 0;"></div>
+</div>
+
     </section>
 </body>
 </html>
