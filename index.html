@@ -25,19 +25,13 @@
             height: 100%;
             margin: 0;
             font-family: 'SF Pro', monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            position: relative; /* Добавлено для позиционирования */
+            position: relative; /* Убедитесь, что это установлено */
+            overflow: hidden; /* Скрывает возможные полосы прокрутки */
         }
 
         /* Стили для фона видео */
-        myVideo {
-            position: fixed;
+        #myVideo {
+            position: fixed; /* Фиксированное позиционирование */
             top: 0;
             left: 0;
             width: 100%;
@@ -47,28 +41,28 @@
         }
 
         .container {
+            position: relative; /* Убедитесь, что контейнер имеет относительное позиционирование */
             text-align: left;
             max-width: 600px;
             padding: 2rem;
-            font-weight: Heavy;
+            color: var(--text); /* Цвет текста */
+            z-index: 1; /* Устанавливает контейнер над видео */
         }
+
         h1 {
             font-size: 2rem;
             margin-bottom: 0.5rem;
-            font-weight: Bold Italic;
+            font-weight: bold;
         }
         .subtitle {
             margin-bottom: 2rem;
             color: var(--text-secondary);
-            font-weight: Light;
         }
         .links {
             margin-top: 2rem;
-            font-weight: Light;
         }
         .links-title {
             margin-bottom: 0.5rem;
-            font-weight: Ultralight Italic;
         }
         a {
             color: var(--link);
@@ -109,7 +103,7 @@
 <body>
     <!-- Фоновое видео -->
     <video autoplay muted loop id="myVideo">
-        <source src="forsite2.mp4" type="video/mp4"> <!-- Убедитесь, что путь к видео правильный -->
+        <source src="forsite.mp4" type="video/mp4"> <!-- Убедитесь, что путь правильный -->
         Ваш браузер не поддерживает видео.
     </video>
 
