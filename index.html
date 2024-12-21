@@ -1,22 +1,116 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Монтаж видео</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>GaferFX</title>
+    <style>
+        :root {
+            --background: #ffffff;
+            --text: #000000;
+            --text-secondary: #666666;
+            --link: #0066cc;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #1a1a1a;
+                --text: #ffffff;
+                --text-secondary: #a0a0a0;
+                --link: #66b3ff;
+            }
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            text-align: left;
+            max-width: 600px;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: normal;
+        }
+        .subtitle {
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+        }
+        .links {
+            margin-top: 2rem;
+        }
+        .links-title {
+            margin-bottom: 0.5rem;
+        }
+        a {
+            color: var(--link);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--link);
+            transition: stroke 0.3s ease;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem;
+            background: none;
+            border: 1px solid var(--text-secondary);
+            color: var(--text);
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover {
+            background-color: var(--text-secondary);
+            color: var(--background);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>GaferFx site</h1>
-        <p>🛠️ Work in progress...</p>
-        <p>P.S. Site is not yet developed</p>
-        <h2>Find me on:</h2>
-        <ul class="social-links">
-            <li><a href="https://mastodon.social" target="_blank">Mastodon</a></li>
-            <li><a href="https://telegram.org/@gfxblog" target="_blank">Telegram</a></li>
-            <li><a href="https://youtube.com" target="_blank">YouTube</a></li>
-        </ul>
+        <h1>GaferFX's site</h1>
+        <div class="subtitle">
+            📹 Video Guy
+        </div>
+        <div class="links">
+            <div class="links-title">Find me on:</div>
+            <a href="mailto:me@gfxcut.pro">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M12 22q-2.075 0-3.9-.788t-3.175-2.137T2.788 15.9T2 12t.788-3.9t2.137-3.175T8.1 2.788T12 2t3.9.788t3.175 2.137T21.213 8.1T22 12v1.45q0 1.475-1.012 2.513T18.5 17q-.875 0-1.65-.375t-1.3-1.075q-.725.725-1.638 1.088T12 17q-2.075 0-3.537-1.463T7 12t1.463-3.537T12 7t3.538 1.463T17 12v1.45q0 .65.425 1.1T18.5 15t1.075-.45t.425-1.1V12q0-3.35-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20h4q.425 0 .713.288T17 21t-.288.713T16 22zm0-7q1.25 0 2.125-.875T15 12t-.875-2.125T12 9t-2.125.875T9 12t.875 2.125T12 15"/>
+                </svg>
+                me@gfxcut.pro
+            </a>
+            <a href="https://t.me/GaferFx" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="31" height="32" viewBox="0 0 496 512">
+                  <path fill="currentColor" d="M248 8C111.033 8 0 119.033 0 256s111.033 248 248 248s248-111.033 248-248S384.967 8 248 8m114.952 168.66c-3.732 39.215-19.881 134.378-28.1 178.3c-3.476 18.584-10.322 24.816-16.948 25.425c-14.4 1.326-25.338-9.517-39.287-18.661c-21.827-14.308-34.158-23.215-55.346-37.177c-24.485-16.135-8.612-25 5.342-39.5c3.652-3.793 67.107-61.51 68.335-66.746c.153-.655.3-3.1-1.154-4.384s-3.59-.849-5.135-.5q-3.283.746-104.608 69.142q-14.845 10.194-26.894 9.934c-8.855-.191-25.888-5.006-38.551-9.123c-15.531-5.048-27.875-7.717-26.8-16.291q.84-6.7 18.45-13.7q108.446-47.248 144.628-62.3c68.872-28.647 83.183-33.623 92.511-33.789c2.052-.034 6.639.474 9.61 2.885a10.45 10.45 0 0 1 3.53 6.716a43.8 43.8 0 0 1 .417 9.769"/>
+                </svg>
+                Telegram
+            </a>
+        </div>
     </div>
 </body>
 </html>
+
