@@ -38,10 +38,12 @@
             height: 100vh;
             margin: 0;
             font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
             overflow-y: auto;
             scroll-behavior: smooth;
             line-height: 1.6;
             color: var(--text);
+            width: 100%;
         }
 
         /* Первый экран */
@@ -91,6 +93,7 @@
         .container {
             text-align: left;
             max-width: 600px;
+            width: 90%;
             padding: 2rem;
             color: var(--text);
             z-index: 1;
@@ -165,6 +168,8 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
             max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
             transition: color var(--theme-transition);
             position: relative;
             z-index: 2;
@@ -586,11 +591,6 @@
                 </a>
             </div>
         </div>
-        <div style="min-height: 100vh; background-color: var(--background); padding: 2rem;">
-    <!-- Можете добавить еще несколько таких блоков -->
-    <div style="height: 500px; background-color: rgba(0,0,0,0.1); margin: 20px 0;"></div>
-    <div style="height: 500px; background-color: rgba(0,0,0,0.2); margin: 20px 0;"></div>
-    <div style="height: 500px; background-color: rgba(0,0,0,0.3); margin: 20px 0;"></div>
 </div>
 
     </section>
