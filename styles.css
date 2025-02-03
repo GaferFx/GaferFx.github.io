@@ -1,0 +1,434 @@
+/* Цветовые переменные */
+:root {
+    --background: #D3D3D3;
+    --text: #000000;
+    --text-secondary: #666666;
+    --link: #0066cc;
+    --header-bg: rgba(255,255,255,0.8);
+    --video-opacity: 0.3;
+    --video-brightness: 100%;
+    --theme-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #1a1a1a;
+        --text: #ffffff;
+        --text-rgb: 255, 255, 255;
+        --text-secondary: #a0a0a0;
+        --link: #66b3ff;
+        --header-bg: rgba(26,26,26,0.8);
+        --video-opacity: 1;
+        --video-brightness: 0.3;
+        transition: var(--theme-transition);
+    }
+}
+
+/* Базовые стили */
+body, html {
+    color-scheme: light dark;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    line-height: 1.6;
+    color: var(--text);
+    width: 100%;
+}
+
+/* Первый экран */
+.first-screen {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Фоновое видео */
+#myVideo {
+    position: fixed;
+    top: -15%;
+    left: -15%;
+    width: 130%;
+    height: 130%;
+    object-fit: cover;
+    z-index: -1;
+    display: block;
+    filter: blur(20px) brightness(var(--video-brightness));
+    opacity: var(--video-opacity);
+    transition: var(--theme-transition);
+    background-color: var(--background);
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+@media (prefers-color-scheme: light) {
+    #myVideo {
+        opacity: 0.3;
+        filter: brightness(100%) blur(10px);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    #myVideo {
+        filter: brightness(0.3) blur(10px);
+        opacity: 1;
+    }
+}
+
+/* Контейнер с контентом */
+.container {
+    text-align: left;
+    max-width: 600px;
+    width: max-content;
+    padding: 2rem;
+    color: var(--text);
+    z-index: 1;
+    font-weight: 800;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 900;
+}
+
+.subtitle {
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.links {
+    margin-top: 2rem;
+    font-weight: 300;
+}
+
+.links-title {
+    margin-bottom: 0.5rem;
+    font-weight: 200;
+}
+
+a {
+    color: var(--link);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+svg {
+    width: 16px;
+    height: 16px;
+    
+    transition: stroke 0.3s ease;
+}
+
+.colorsvg path {
+    fill: var(--link);
+}
+
+/* Секция с видео */
+.video-section {
+    min-height: 100vh;
+    width: 100%;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: var(--theme-transition);
+    position: relative;
+    z-index: 1;
+    margin-top: 0;
+    background: var(--background);
+    overflow: hidden;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+    transition: color var(--theme-transition);
+    position: relative;
+    z-index: 2;
+}
+
+.video-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform var(--theme-transition);
+    transition: color var(--theme-transition);
+    
+}
+
+.video-item:hover {
+    transform: scale(1.05);
+}
+
+.video-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Header */
+/* Header стили */
+/* Удалить все старые стили header'а и оставить только эти */
+/* Обновляем стили header'а */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--header-bg);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    display: flex;
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: opacity var(--theme-transition), transform var(--theme-transition), background-color var(--theme-transition);
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-color-scheme: dark) {
+    .header {
+        background-color: rgba(26,26,26,0.8);
+    }
+}
+
+.container-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+}
+
+.container-header h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1;
+    padding: 0;
+}
+
+.links-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 0;
+    height: 100%;
+}
+
+.links-header a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    margin: 0;
+    height: 100%;
+    color: var(--text);
+    text-decoration: none;
+    outline: none;
+    border: none;
+}
+
+.links-header a:focus,
+.links-header a:active {
+    outline: none;
+    border: none;
+}
+
+.links-header svg {
+    vertical-align: middle;
+    color: var(--text);
+    outline: none;
+}
+
+@media (max-width: 480px) {
+    .links-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
+@media (prefers-color-scheme: dark) {
+    .header {
+        background-color: rgba(26,26,26,0.8);
+    }
+}
+
+.header.show {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeSlideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.header.hide {
+    opacity: 0;
+    transform: translateY(-100%);
+}
+
+
+
+.container-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;  /* Изменим padding для лучшего выравнивания */
+}
+
+.container-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;  /* Уменьшаем gap с 2rem до 1rem */
+}
+
+.container-header h1 {
+    margin: 0;  /* Уберем margin */
+    font-size: 1.2rem;
+    line-height: 1;
+    padding: 0;  /* Уберем padding */
+}
+
+.links-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 0;  /* Уберем margin */
+    height: 100%;  /* Установим высоту */
+}
+
+.links-header a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    margin: 0;  /* Уберем margin */
+    height: 100%;  /* Установим высоту */
+}
+
+.links-header svg {
+    vertical-align: middle;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: fixed;
+    bottom: -10vh;
+    left: 0;
+    width: 100%;
+    height: 35vh;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 255, 0, 0.25) 50%, rgba(0, 255, 0, 0.75) 100%);
+    opacity: 0;
+    filter: blur(6px);
+    animation: pulseLight 2.5s infinite;
+    animation-delay: 4s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+    .scroll-indicator {
+        background: linear-gradient(to bottom, transparent 0%, rgba(0, 140, 255, 0.25) 50%, rgba(0, 140, 255, 0.45) 100%);
+    }
+}
+
+@keyframes pulseLight {
+    0% { opacity: 0; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+    100% { opacity: 0; transform: scale(1); }
+}
+
+
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50%);
+        filter: blur(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+    .links-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
+.gradient-transition-first {
+    height: 200px;
+    background: linear-gradient(to bottom, transparent 0%, var(--background) 100%);
+    position: relative;
+    z-index: 2;
+    margin-top: -200px;
+    pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .gradient-transition {
+        background: linear-gradient(to bottom, transparent 0%, var(--background) 100%);
+    }
+}
+
+
+.gradient-transition-second {
+    height: 300px;
+    background: linear-gradient(to top, var(--background) 0%, transparent 100%);
+    position: relative;
+    z-index: 2;
+    margin-top: -300px;
+    pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .gradient-transition {
+        background: linear-gradient(to top, var(--background) 0%, rgba(26,26,26,0) 100%);
+    }
+}
