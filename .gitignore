@@ -4,6 +4,6 @@ node_modules
 venv
 .venv
 
-# Generated locally by Bun; GitHub Actions creates it during deployment.
-projects.json
-
+# Build output; GitHub Actions recreates it during deployment.
+dist/
+index.build.html
