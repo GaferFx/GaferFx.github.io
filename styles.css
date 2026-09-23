@@ -25,16 +25,21 @@
 }
 
 /* Базовые стили */
-body, html {
+html {
     color-scheme: light dark;
-    height: 100vh;
+    min-height: 100%;
+    background: var(--background);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
     margin: 0;
     font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-    overflow-y: auto;
-    scroll-behavior: smooth;
     line-height: 1.6;
     color: var(--text);
+    background: var(--background);
     width: 100%;
 }
 
@@ -45,6 +50,9 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+    isolation: isolate;
+    clip-path: inset(-100vh 0 0 0);
+    background: var(--background);
 }
 
 /* Фоновое видео */
@@ -55,8 +63,9 @@ body, html {
     width: 130%;
     height: 130%;
     object-fit: cover;
-    z-index: -1;
+    z-index: 0;
     display: block;
+    pointer-events: none;
     filter: blur(20px) brightness(var(--video-brightness));
     opacity: var(--video-opacity);
     transition: var(--theme-transition);
@@ -596,17 +605,43 @@ body.player-open { overflow: hidden; }
     position: relative;
     z-index: 3;
 }
+.footer-art {
+    width: min(100%, 220px);
+    margin: 0 auto .25rem;
+}
+.footer-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .4rem;
+}
+.footer-badges-left { justify-content: flex-end; }
+.footer-badges-right { justify-content: flex-start; }
+.footer-meta .footer-badges { flex: 1 1 0; }
+.footer-meta .footer-badges-left { min-width: 88px; }
+.footer-meta .footer-badges-right { min-width: 0; }
+.footer-badges a {
+    display: inline-block;
+    flex: none;
+    line-height: 0;
+    margin: 0;
+}
+.footer-badges img {
+    display: block;
+    width: 88px;
+    height: 37px;
+    image-rendering: pixelated;
+}
 .signature {
     display: block;
-    width: min(100%, 220px);
+    width: 100%;
     height: auto;
-    margin: 0 auto .25rem;
     opacity: 1;
 }
 .footer-meta {
     display: flex;
     justify-content: center;
-    align-items: baseline;
+    align-items: center;
     gap: .65rem;
     color: var(--text);
     line-height: 1.2;
