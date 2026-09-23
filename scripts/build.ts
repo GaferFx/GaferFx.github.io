@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-import { rm } from "node:fs/promises";
+import { readdir, rm } from "node:fs/promises";
 import { resolve } from "node:path";
 import { root, renderPage } from "./site";
 
@@ -32,8 +32,20 @@ try {
     process.exit(1);
   }
 
+  // Bun переписывает ссылки на ассеты в разметке, но не трогает url() в style-атрибутах —
+  // подменяем /public/... на имена файлов, реально лежащих в dist (с content-hash).
+  const distFiles = await readdir(dist);
   const bundledHtml = resolve(dist, "index.build.html");
-  await Bun.write(resolve(dist, "index.html"), minifyHtml(await Bun.file(bundledHtml).text()));
+  const finalHtml = (await Bun.file(bundledHtml).text()).replace(
+    /url\(['"]?[^'")]*public\/([^'")]+)['"]?\)/g,
+    (match, rel: string) => {
+      const base = rel.split("/").pop() ?? rel;
+      const dot = base.lastIndexOf(".");
+      const hashed = distFiles.find(f => f.startsWith(`${base.slice(0, dot)}-`) && f.endsWith(base.slice(dot)));
+      return hashed ? `url('./${hashed}')` : match;
+    },
+  );
+  await Bun.write(resolve(dist, "index.html"), minifyHtml(finalHtml));
   await rm(bundledHtml);
 
   for (const output of result.outputs) console.log(`  ${output.path.replace(`${root}/`, "")}`);

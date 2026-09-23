@@ -44,9 +44,10 @@ const embedBuilders = {
 function openPlayer(button) {
     const build = embedBuilders[button.dataset.provider];
     if (!build || !button.dataset.videoId) return;
-    playerFrame.title = button.dataset.title;
+    const title = button.querySelector('.project-title')?.textContent || 'Видео';
+    playerFrame.title = title;
     playerFrame.src = build(button.dataset.videoId);
-    playerModal.setAttribute('aria-label', button.dataset.title || 'Видеоплеер');
+    playerModal.setAttribute('aria-label', title);
     playerModal.showModal();
     document.body.classList.add('player-open');
     playerClose.focus();

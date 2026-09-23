@@ -106,9 +106,13 @@ a {
     gap: 0.5rem;
     margin-bottom: 0.5rem;
 }
-
-a:hover {
+a:focus { outline: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible {
     text-decoration: underline;
+    outline: 2px solid var(--link);
+    outline-offset: 4px;
+    border-radius: 4px;
 }
 
 svg {
@@ -254,50 +258,58 @@ svg {
     margin-left: calc(50% - 50vw);
 }
 
+/* Карточка проекта: сам элемент является a / button / div. */
 .project {
+    width: 100%;
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background: var(--background);
-}
-
-.project::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: rgba(211, 211, 211, .38);
-    z-index: -1;
-}
-
-@media (prefers-color-scheme: dark) {
-    .project::after { background: rgba(26, 26, 26, .42); }
-}
-
-.project-bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: blur(16px);
-    transform: scale(1.08);
-    opacity: .55;
-    z-index: -2;
-    pointer-events: none;
-}
-
-.project + .project .project-content { border-top: 1px solid rgba(128, 128, 128, .25); }
-
-.project-content {
-    width: min(100% - 3rem, 1100px);
-    margin: 0 auto;
-    padding: clamp(2rem, 5vw, 4rem) 0;
     display: grid;
     grid-template-columns: minmax(0, 480px) minmax(0, 1fr);
     align-items: center;
     gap: clamp(2rem, 5vw, 5rem);
+    padding: clamp(2rem, 5vw, 4rem) max(1.5rem, (100% - 1100px) / 2);
+    margin: 0;
+    border: 0;
+    color: var(--text);
+    background: var(--background);
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
 }
+
+:is(a, button).project { cursor: pointer; }
+
+.project:focus,
+.project:focus-visible { outline: none; }
+
+:is(a, button).project:focus-visible {
+    outline: 3px solid var(--link);
+    outline-offset: -3px;
+    border-radius: 3px;
+
+    & .project-title {
+        text-decoration: underline;
+    }
+}
+
+.project::before, .project::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.project::before {
+    background: var(--project-bg, var(--background)) center / cover no-repeat;
+    filter: blur(16px);
+    transform: scale(1.08);
+    opacity: .35;
+    z-index: -2;
+}
+
+
+/* .project + .project { border-top: 1px solid rgba(128, 128, 128, .25); } */
 
 .project-media {
     position: relative;
@@ -306,13 +318,8 @@ svg {
     aspect-ratio: 16 / 9;
     overflow: hidden;
     background: #111;
-    border: 0;
-    padding: 0;
-    cursor: pointer;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, .2), 0 8px 24px rgba(0, 0, 0, .2);
 }
-
-.project-media-static { cursor: default; }
 
 .project-media img {
     display: block;
@@ -323,7 +330,10 @@ svg {
     transition: transform .35s ease, filter .35s ease;
 }
 
-.project-media:hover img { transform: scale(1.035); filter: saturate(1.18) contrast(1.12) brightness(1.08); }
+:is(a, button).project:is(:hover, :focus-visible) .project-media img {
+    transform: scale(1.035);
+    filter: saturate(1.18) contrast(1.12) brightness(1.08);
+}
 
 .provider-badge {
     position: absolute;
@@ -344,10 +354,7 @@ svg {
 
 .provider-badge svg { display: block; width: 1.75rem; height: 1.25rem; }
 
-.project-media:focus-visible, .project-title a:focus-visible {
-    outline: 2px solid var(--link);
-    outline-offset: 4px;
-}
+:is(a, button).project:is(:hover, :focus-visible) .project-title { color: var(--link); }
 
 .player-modal {
     width: 100%;
@@ -405,13 +412,8 @@ body.player-open { overflow: hidden; }
     color: var(--text);
 }
 
-.project-title a { display: inline; margin: 0; color: inherit; }
-.project-title a:hover { color: var(--link); }
-.project-title button { border: 0; padding: 0; background: none; font: inherit; color: inherit; cursor: pointer; text-align: left; }
-.project-title button:hover { color: var(--link); }
-
 @media (max-width: 700px) {
-    .project-content {
+    .project {
         grid-template-columns: 1fr;
         gap: 1.25rem;
     }
