@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://youtube.com/watch?v=_MTUYQyayqA&list=PLrIQ__gs67z4i_Yv7ohdeUyJMzUDCE_OJ",
+    "image": "",
+    "title": "Подкасты \"ЁМКО!\"",
+    "provider": "youtube",
+    "thumbnail": "https://i.ytimg.com/vi/_MTUYQyayqA/hqdefault.jpg",
+    "embed": true,
+    "hidden": false
+  },
+  {
+    "url": "https://youtu.be/FAyxfopScn8",
+    "image": "",
+    "title": "Сергей Арутюнов, Настя Макаревич & группа \"Лицей\", Dj Nejtrino, Иван Воробьев - Школа № 7",
+    "provider": "youtube",
+    "thumbnail": "https://i.ytimg.com/vi/FAyxfopScn8/hqdefault.jpg",
+    "embed": true,
+    "hidden": false
+  },
+  {
+    "url": "https://youtu.be/VBWcR674FRk",
+    "image": "",
+    "title": "Сергей Арутюнов, Валерий Сюткин, Иван Воробьев - Я то что надо",
+    "provider": "youtube",
+    "thumbnail": "https://i.ytimg.com/vi/VBWcR674FRk/hqdefault.jpg",
+    "embed": true,
+    "hidden": false
+  },
+  {
+    "url": "https://youtu.be/p3TEaBwFuks",
+    "image": "",
+    "title": "Сергей АРУТЮНОВ, ASTERO - Тучи!",
+    "provider": "youtube",
+    "thumbnail": "https://i.ytimg.com/vi/p3TEaBwFuks/hqdefault.jpg",
+    "embed": true,
+    "hidden": false
+  }
+]
