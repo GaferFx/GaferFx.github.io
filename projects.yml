@@ -2,13 +2,5 @@
 # Обязательные поля: url и title.
 # provider, thumbnail, embed и hidden — необязательные.
 
-- url: https://www.youtube.com/watch?v=DYGrNhGbl6U
-  title: time
-
-- url: https://www.youtube.com/watch?v=ZUGzvzz9HK4
-  title: Baby Diver
-
-- url: https://www.youtube.com/watch?v=sdrtK7nSzn8
-  title: that
 - url: https://youtu.be/_MTUYQyayqA
   title: 'Подкаст "ЁМКО!" Выпуск #11 - с Леной Иевской'
