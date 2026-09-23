@@ -17,7 +17,8 @@ function minifyHtml(html: string): string {
 try {
   const html = await renderPage();
   await rm(dist, { recursive: true, force: true });
-  await Bun.write(genEntry, html);
+  // Bun пока не понимает srcset — прячем его в data-srcset и восстанавливаем после бандла.
+  await Bun.write(genEntry, html.replace(/ srcset="([^"]+)"/g, (_m, v) => ` data-srcset="${v}"`));
 
   const result = await Bun.build({
     entrypoints: [genEntry],
@@ -32,19 +33,43 @@ try {
     process.exit(1);
   }
 
-  // Bun переписывает ссылки на ассеты в разметке, но не трогает url() в style-атрибутах —
-  // подменяем /public/... на имена файлов, реально лежащих в dist (с content-hash).
+  // Bun переписывает ссылки на ассеты в разметке, но не трогает url() в style-атрибутах
+  // и srcset (спрятан в data-srcset) — подменяем public/... на файлы из dist,
+  // а недостающие докидываем туда сами.
   const distFiles = await readdir(dist);
+  const rewriteAsset = async (rawPath: string): Promise<string> => {
+    const rel = rawPath.replace(/^\.?\/+/, "");
+    if (!rel.startsWith("public/")) return rawPath;
+    const base = rel.split("/").pop() ?? rel;
+    const dot = base.lastIndexOf(".");
+    const hashed = distFiles.find(f => f.startsWith(`${base.slice(0, dot)}-`) && f.endsWith(base.slice(dot)));
+    if (hashed) return `./${hashed}`;
+    const source = resolve(root, rel);
+    if (await Bun.file(source).exists()) {
+      await Bun.write(resolve(dist, base), Bun.file(source));
+      return `./${base}`;
+    }
+    return rawPath;
+  };
+
   const bundledHtml = resolve(dist, "index.build.html");
-  const finalHtml = (await Bun.file(bundledHtml).text()).replace(
-    /url\(['"]?[^'")]*public\/([^'")]+)['"]?\)/g,
-    (match, rel: string) => {
-      const base = rel.split("/").pop() ?? rel;
-      const dot = base.lastIndexOf(".");
-      const hashed = distFiles.find(f => f.startsWith(`${base.slice(0, dot)}-`) && f.endsWith(base.slice(dot)));
-      return hashed ? `url('./${hashed}')` : match;
-    },
-  );
+  const bundled = await Bun.file(bundledHtml).text();
+  const paths = new Set<string>();
+  const addPath = (value: string | undefined) => { if (value) paths.add(value); };
+  for (const m of bundled.matchAll(/url\((['"]?)([^'")]+)\1\)/g)) addPath(m[2]);
+  for (const m of bundled.matchAll(/ data-srcset="([^"]+)"/g)) {
+    for (const entry of (m[1] ?? "").split(",")) addPath(entry.trim().split(/\s+/)[0]);
+  }
+  const rewritten = new Map<string, string>();
+  for (const path of paths) rewritten.set(path, await rewriteAsset(path));
+
+  const finalHtml = bundled
+    .replace(/url\((['"]?)([^'")]+)\1\)/g, (_m, _q, url: string) => `url('${rewritten.get(url) ?? url}')`)
+    .replace(/ data-srcset="([^"]+)"/g, (_m, v: string) =>
+      ` srcset="${v.split(",").map(entry => {
+        const [url = "", descriptor] = entry.trim().split(/\s+/);
+        return `${rewritten.get(url) ?? url}${descriptor ? ` ${descriptor}` : ""}`;
+      }).join(", ")}"`);
   await Bun.write(resolve(dist, "index.html"), minifyHtml(finalHtml));
   await rm(bundledHtml);
 
