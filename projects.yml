@@ -6,7 +6,7 @@
 # - image: /images/poster.jpg
 #   title: 'Название картинки'
 
-- image: https%3A%2F%2Fstatic.insales-cdn.com%2Fimages%2Farticles%2F1%2F4839%2F7271143%2Funnamed.jpg&f=1&nofb=1&ipt=8fd71720cd351aef7f3d5c83167a0c5cbc5fda86dcbb45c627010e6609799388
+- image: https://static.insales-cdn.com/images/articles/1/4839/7271143/unnamed.jpg
   title: 'Участник Flowers Expo'
 
 - url: https://youtube.com/watch?v=_MTUYQyayqA&list=PLrIQ__gs67z4i_Yv7ohdeUyJMzUDCE_OJ
@@ -15,7 +15,7 @@
 - url: https://youtu.be/FAyxfopScn8
   title: 'Сергей Арутюнов, Настя Макаревич & группа "Лицей", Dj Nejtrino, Иван Воробьев - Школа № 7'
 
-- image: https%3A%2F%2Fresizer.mail.ru%2Fp%2F60227d76-11f9-5637-8dc2-e63bac072aff%2FAQAzyO-J9pQ2lrJnD7wVS40IAd3HtcIH1EgumwYS1WriJmL_MzMOq6MufM7jJ7oU7rBv1FkZTKOYC29_MJdEI24CCWA.png&f=1&nofb=1&ipt=b26a888bb09caebde9419f196f35ec1481699da1105f0c0c033b6fdf4b734fff
+- image: https://resizer.mail.ru/p/60227d76-11f9-5637-8dc2-e63bac072aff/AQAzyO-J9pQ2lrJnD7wVS40IAd3HtcIH1EgumwYS1WriJmL_MzMOq6MufM7jJ7oU7rBv1FkZTKOYC29_MJdEI24CCWA.png
   title: 'Участник ПМЭФ 2026'
   
 - url: https://youtu.be/VBWcR674FRk
@@ -25,6 +25,6 @@
   title: 'Сергей АРУТЮНОВ, ASTERO - Тучи!'
 
 - url: https://academy.kaspersky.com/course/cyberhygiene
-  image: https%3A%2F%2Ftechnave.com%2Fdata%2Ffiles%2Farticle%2F202511100741361963.jpg&f=1&nofb=1&ipt=b6461340df2ac4509d4efcb27783241458a8c5cf10bf214992d7eba745703da2
+  image: https://technave.com/data/files/article/202511100741361963.jpg
   title: 'Онлайн-курс «Кибергигиена» от Касперского ENG'
   
