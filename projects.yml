@@ -1,6 +1,10 @@
 # Проекты отображаются сверху вниз в этом же порядке.
-# Обязательные поля: url и title.
+# Для видео обязательны url и title.
+# Для статичной картинки обязательны image и title.
 # provider, thumbnail, embed и hidden — необязательные.
+# Пример картинки:
+# - image: /images/poster.jpg
+#   title: 'Название картинки'
 
 - url: https://youtube.com/watch?v=_MTUYQyayqA&list=PLrIQ__gs67z4i_Yv7ohdeUyJMzUDCE_OJ
   title: 'Подкасты "ЁМКО!"'

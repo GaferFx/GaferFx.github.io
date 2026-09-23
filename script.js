@@ -99,16 +99,20 @@ function providerIdFromUrl(url, provider) {
 
 function createProject(project) {
     if (project.hidden) return '';
-    const provider = project.provider || 'browser';
-    const videoId = providerIdFromUrl(project.url, provider);
-    const canEmbed = project.embed !== false && ['youtube', 'vimeo', 'rutube', 'twitch', 'dailymotion'].includes(provider) && videoId;
-    const action = canEmbed ? 'button' : 'link';
-    const target = canEmbed ? '' : ' target="_blank" rel="noopener noreferrer"';
-    const mediaTag = canEmbed ? 'button' : 'a';
+    const provider = project.provider || (project.image ? 'image' : 'browser');
+    const isImage = provider === 'image' || (!project.url && project.image);
+    const videoId = isImage ? '' : providerIdFromUrl(project.url, provider);
+    const canEmbed = !isImage && project.embed !== false && ['youtube', 'vimeo', 'rutube', 'twitch', 'dailymotion'].includes(provider) && videoId;
+    const isExternalLink = !isImage && !canEmbed && project.url;
+    const target = isExternalLink ? ' target="_blank" rel="noopener noreferrer"' : '';
+    const mediaTag = canEmbed ? 'button' : (isExternalLink ? 'a' : 'div');
     const providerLogo = providerLogos[provider] || providerLogos.browser;
     const image = project.thumbnail || (provider === 'youtube' && videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : '');
-    const mediaAttributes = canEmbed ? `type="button" data-provider="${escapeHtml(provider)}" data-video-id="${escapeHtml(videoId)}" data-title="${escapeHtml(project.title)}"` : `href="${escapeHtml(project.url)}"${target}`;
-    return `<article class="project" style="--project-image: url('${escapeHtml(image)}')"><div class="project-content"><${mediaTag} class="project-media" ${mediaAttributes} aria-label="Открыть ${escapeHtml(project.title)}"><img src="${escapeHtml(image)}" alt="${escapeHtml(project.title)} — превью видео" loading="lazy"><span class="provider-badge" aria-label="${escapeHtml(provider)}">${providerLogo}</span></${mediaTag}><h3 class="project-title">${canEmbed ? `<button type="button" data-provider="${escapeHtml(provider)}" data-video-id="${escapeHtml(videoId)}" data-title="${escapeHtml(project.title)}">${escapeHtml(project.title)}</button>` : `<a href="${escapeHtml(project.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.title)}</a>`}</h3></div></article>`;
+    const mediaAttributes = canEmbed ? `type="button" data-provider="${escapeHtml(provider)}" data-video-id="${escapeHtml(videoId)}" data-title="${escapeHtml(project.title)}"` : (isExternalLink ? `href="${escapeHtml(project.url)}"${target}` : 'aria-hidden="true"');
+    const titleMarkup = canEmbed
+        ? `<button type="button" data-provider="${escapeHtml(provider)}" data-video-id="${escapeHtml(videoId)}" data-title="${escapeHtml(project.title)}">${escapeHtml(project.title)}</button>`
+        : (isExternalLink ? `<a href="${escapeHtml(project.url)}"${target}>${escapeHtml(project.title)}</a>` : escapeHtml(project.title));
+    return `<article class="project" style="--project-image: url('${escapeHtml(image)}')"><div class="project-content"><${mediaTag} class="project-media${isImage ? ' project-media-static' : ''}" ${mediaAttributes} aria-label="${isExternalLink || canEmbed ? `Открыть ${escapeHtml(project.title)}` : escapeHtml(project.title)}"><img src="${escapeHtml(image)}" alt="${escapeHtml(project.title)}" loading="lazy">${isImage ? '' : `<span class="provider-badge" aria-label="${escapeHtml(provider)}">${providerLogo}</span>`}</${mediaTag}><h3 class="project-title">${titleMarkup}</h3></div></article>`;
 }
 
 function openPlayer(button) {

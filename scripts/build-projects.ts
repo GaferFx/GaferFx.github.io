@@ -8,6 +8,7 @@ const output = resolve(root, "projects.json");
 
 type RawProject = {
   url?: unknown;
+  image?: unknown;
   title?: unknown;
   provider?: unknown;
   thumbnail?: unknown;
@@ -17,6 +18,7 @@ type RawProject = {
 
 type Project = {
   url: string;
+  image: string;
   title: string;
   provider: string;
   thumbnail: string;
@@ -50,16 +52,20 @@ function normalize(records: unknown): Project[] {
   return records.map((value: RawProject, index) => {
     if (!value || typeof value !== "object") throw new Error(`Project #${index + 1} must be an object`);
     const url = String(value.url ?? "").trim();
+    const image = String(value.image ?? "").trim();
     const title = String(value.title ?? "").trim();
-    if (!url || !title) throw new Error(`Project #${index + 1} must contain non-empty url and title`);
-    try { new URL(url); } catch { throw new Error(`Project #${index + 1} has an invalid URL: ${url}`); }
-    const provider = String(value.provider ?? detectProvider(url)).trim().toLowerCase();
+    if ((!url && !image) || !title) throw new Error(`Project #${index + 1} must contain title and either url or image`);
+    if (url) {
+      try { new URL(url); } catch { throw new Error(`Project #${index + 1} has an invalid URL: ${url}`); }
+    }
+    const provider = String(value.provider ?? (url ? detectProvider(url) : "image")).trim().toLowerCase();
     return {
       url,
+      image,
       title,
       provider,
-      thumbnail: String(value.thumbnail ?? (provider === "youtube" ? youtubeThumbnail(url) : "")),
-      embed: asBoolean(value.embed, true),
+      thumbnail: String(value.thumbnail ?? (image || (provider === "youtube" ? youtubeThumbnail(url) : ""))),
+      embed: asBoolean(value.embed, Boolean(url)),
       hidden: asBoolean(value.hidden, false),
     };
   });
