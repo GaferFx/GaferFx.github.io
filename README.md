@@ -136,7 +136,7 @@ Workflow находится в `.github/workflows/deploy.yml`. При push в в
 2. запускает `bun run scripts/build-projects.ts`;
 3. создаёт свежий `projects.json`;
 4. загружает весь проект как Pages artifact;
-5. публикует сайт через GitHub Pages.
+5. публикует сайт через GitHub Pages в окружение `github-pages`.
 
 Запуск также можно сделать вручную через **Actions → Build and deploy to GitHub Pages → Run workflow**.
 
