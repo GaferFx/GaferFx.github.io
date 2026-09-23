@@ -4,7 +4,6 @@ const projectsList = document.querySelector('#projects-list');
 const playerModal = document.querySelector('#player-modal');
 const playerFrame = document.querySelector('#player-frame');
 const playerClose = document.querySelector('.player-close');
-let lastFocusedElement;
 
 new IntersectionObserver((entries) => {
     entries.forEach(entry => header.classList.toggle('visible', !entry.isIntersecting));
@@ -45,30 +44,25 @@ const embedBuilders = {
 function openPlayer(button) {
     const build = embedBuilders[button.dataset.provider];
     if (!build || !button.dataset.videoId) return;
-    lastFocusedElement = document.activeElement;
     playerFrame.title = button.dataset.title;
     playerFrame.src = build(button.dataset.videoId);
-    playerModal.hidden = false;
+    playerModal.setAttribute('aria-label', button.dataset.title || 'Видеоплеер');
+    playerModal.showModal();
     document.body.classList.add('player-open');
     playerClose.focus();
 }
 
-function closePlayer() {
-    playerModal.hidden = true;
+playerModal.addEventListener('close', () => {
     playerFrame.src = '';
     document.body.classList.remove('player-open');
-    if (lastFocusedElement) lastFocusedElement.focus();
-}
+});
 
 projectsList.addEventListener('click', event => {
     const button = event.target.closest('[data-video-id]');
     if (button) openPlayer(button);
 });
 
-playerClose.addEventListener('click', closePlayer);
+playerClose.addEventListener('click', () => playerModal.close());
 playerModal.addEventListener('click', event => {
-    if (event.target === playerModal) closePlayer();
-});
-document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && !playerModal.hidden) closePlayer();
+    if (event.target === playerModal) playerModal.close();
 });

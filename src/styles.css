@@ -398,15 +398,23 @@ svg {
     outline-offset: 4px;
 }
 
-.player-modal[hidden] { display: none; }
-
 .player-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    display: grid;
-    place-items: center;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
     padding: 1.25rem;
+    border: 0;
+    background: transparent;
+    place-items: center;
+}
+
+.player-modal[open] {
+    display: grid;
+}
+
+.player-modal::backdrop {
     background: rgba(0, 0, 0, .84);
 }
 
@@ -496,7 +504,10 @@ body.player-open { overflow: hidden; }
     display: block;
     width: 88px;
     height: 37px;
+    image-rendering: auto;
+    image-rendering: crisp-edges;
     image-rendering: pixelated;
+    image-rendering: -webkit-optimize-contrast;
 }
 
 .signature {

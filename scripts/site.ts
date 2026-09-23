@@ -4,6 +4,7 @@ export const root = resolve(import.meta.dir, "..");
 export const templatePath = resolve(root, "index.html");
 export const projectsPath = resolve(root, "projects.yml");
 export const MARKER = "<!--PROJECTS-->";
+export const YEAR_MARKER = "{{BUILD_YEAR}}";
 
 type RawProject = {
   url?: unknown;
@@ -125,5 +126,7 @@ export async function renderPage(): Promise<string> {
     loadProjects(),
   ]);
   if (!template.includes(MARKER)) throw new Error(`index.html is missing the ${MARKER} marker`);
-  return template.replace(MARKER, () => projects.map(renderProject).join("\n"));
+  return template
+    .replace(MARKER, () => projects.map(renderProject).join("\n"))
+    .replaceAll(YEAR_MARKER, String(new Date().getFullYear()));
 }
