@@ -5,8 +5,8 @@
     --text-secondary: #666666;
     --link: #0066cc;
     --header-bg: rgba(255, 255, 255, 0.8);
+    --video-filter: blur(10px) brightness(100%);
     --video-opacity: 0.3;
-    --video-brightness: 100%;
     --theme-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -17,8 +17,8 @@
         --text-secondary: #a0a0a0;
         --link: #66b3ff;
         --header-bg: rgba(26, 26, 26, 0.8);
+        --video-filter: blur(10px) brightness(0.3);
         --video-opacity: 1;
-        --video-brightness: 0.3;
     }
 }
 
@@ -38,7 +38,6 @@ body {
     line-height: 1.6;
     color: var(--text);
     background: var(--background);
-    width: 100%;
 }
 
 /* Первый экран */
@@ -56,40 +55,19 @@ body {
 /* Фоновое видео */
 #myVideo {
     position: fixed;
-    top: -15%;
-    left: -15%;
+    inset: -15%;
     width: 130%;
     height: 130%;
     object-fit: cover;
-    z-index: 0;
-    display: block;
     pointer-events: none;
-    filter: blur(20px) brightness(var(--video-brightness));
+    filter: var(--video-filter);
     opacity: var(--video-opacity);
     transition: var(--theme-transition);
-    background-color: var(--background);
-    margin: 0;
-    padding: 0;
-    border: none;
-}
-
-@media (prefers-color-scheme: light) {
-    #myVideo {
-        opacity: 0.3;
-        filter: brightness(100%) blur(10px);
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    #myVideo {
-        filter: brightness(0.3) blur(10px);
-        opacity: 1;
-    }
+    background: var(--background);
 }
 
 /* Контейнер с контентом */
 .container {
-    text-align: left;
     max-width: 600px;
     width: max-content;
     padding: 2rem;
@@ -136,28 +114,6 @@ a:hover {
 svg {
     width: 16px;
     height: 16px;
-    transition: stroke 0.3s ease;
-}
-
-.colorsvg path {
-    fill: var(--link);
-}
-
-/* Секция с проектами */
-.video-section {
-    min-height: 100vh;
-    width: 100%;
-    padding: 4rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: var(--theme-transition);
-    position: relative;
-    z-index: 1;
-    margin-top: 0;
-    background: var(--background);
-    overflow: hidden;
 }
 
 /* Header */
@@ -166,6 +122,7 @@ svg {
     top: 0;
     left: 0;
     width: 100%;
+    box-sizing: border-box;
     background-color: var(--header-bg);
     backdrop-filter: blur(10px);
     z-index: 100;
@@ -173,7 +130,6 @@ svg {
     opacity: 0;
     transform: translateY(-100%);
     transition: opacity var(--theme-transition), transform var(--theme-transition), background-color var(--theme-transition);
-    justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -191,11 +147,11 @@ svg {
     padding: 1rem 2rem;
 }
 
-.container-header h1 {
+.site-name {
     margin: 0;
     font-size: 1.2rem;
+    font-weight: 900;
     line-height: 1;
-    padding: 0;
 }
 
 .links-header {
@@ -207,28 +163,15 @@ svg {
 }
 
 .links-header a {
-    display: flex;
-    align-items: center;
     gap: 5px;
     font-size: 0.9rem;
     margin: 0;
     height: 100%;
     color: var(--text);
-    text-decoration: none;
-    outline: none;
-    border: none;
-}
-
-.links-header a:focus,
-.links-header a:active {
-    outline: none;
-    border: none;
 }
 
 .links-header svg {
     vertical-align: middle;
-    color: var(--text);
-    outline: none;
 }
 
 @media (max-width: 480px) {
@@ -280,8 +223,14 @@ svg {
     box-sizing: border-box;
     min-height: 65vh;
     padding: clamp(5rem, 10vw, 9rem) 1.5rem;
-    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
     align-items: stretch;
+    justify-content: flex-start;
+    transition: var(--theme-transition);
+    position: relative;
+    z-index: 1;
+    background: var(--background);
     overflow: visible;
 }
 
@@ -317,6 +266,12 @@ svg {
     position: absolute;
     inset: 0;
     pointer-events: none;
+    background: rgba(211, 211, 211, .38);
+    z-index: -1;
+}
+
+@media (prefers-color-scheme: dark) {
+    .project::after { background: rgba(26, 26, 26, .42); }
 }
 
 .project-bg {
@@ -330,15 +285,6 @@ svg {
     opacity: .55;
     z-index: -2;
     pointer-events: none;
-}
-
-.project::after {
-    background: rgba(211, 211, 211, .38);
-    z-index: -1;
-}
-
-@media (prefers-color-scheme: dark) {
-    .project::after { background: rgba(26, 26, 26, .42); }
 }
 
 .project + .project .project-content { border-top: 1px solid rgba(128, 128, 128, .25); }
@@ -366,6 +312,8 @@ svg {
     box-shadow: 0 0 0 1px rgba(255, 255, 255, .2), 0 8px 24px rgba(0, 0, 0, .2);
 }
 
+.project-media-static { cursor: default; }
+
 .project-media img {
     display: block;
     width: 100%;
@@ -389,6 +337,9 @@ svg {
     border-radius: .5rem;
     background: rgba(0, 0, 0, .78);
     box-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+    color: #fff;
+    font-size: .9rem;
+    font-weight: 700;
 }
 
 .provider-badge svg { display: block; width: 1.75rem; height: 1.25rem; }
@@ -480,18 +431,25 @@ body.player-open { overflow: hidden; }
     margin: 0 auto .25rem;
 }
 
+.footer-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .65rem;
+    color: var(--text);
+    line-height: 1.2;
+}
+
 .footer-badges {
+    flex: 1 1 0;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: .4rem;
 }
 
-.footer-badges-left { justify-content: flex-end; }
+.footer-badges-left { justify-content: flex-end; min-width: 88px; }
 .footer-badges-right { justify-content: flex-start; }
-.footer-meta .footer-badges { flex: 1 1 0; }
-.footer-meta .footer-badges-left { min-width: 88px; }
-.footer-meta .footer-badges-right { min-width: 0; }
 
 .footer-badges a {
     display: inline-block;
@@ -504,7 +462,6 @@ body.player-open { overflow: hidden; }
     display: block;
     width: 88px;
     height: 37px;
-    image-rendering: auto;
     image-rendering: crisp-edges;
     image-rendering: pixelated;
     image-rendering: -webkit-optimize-contrast;
@@ -514,16 +471,6 @@ body.player-open { overflow: hidden; }
     display: block;
     width: 100%;
     height: auto;
-    opacity: 1;
-}
-
-.footer-meta {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: .65rem;
-    color: var(--text);
-    line-height: 1.2;
 }
 
 .footer-caption,
@@ -539,5 +486,7 @@ body.player-open { overflow: hidden; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .scroll-indicator { animation: none; }
     .project-media img { transition: none; }
 }

@@ -53,7 +53,9 @@ function openPlayer(button) {
 }
 
 playerModal.addEventListener('close', () => {
-    playerFrame.src = '';
+    playerFrame.removeAttribute('src');
+    playerFrame.title = 'Видео';
+    playerModal.setAttribute('aria-label', 'Видеоплеер');
     document.body.classList.remove('player-open');
 });
 
