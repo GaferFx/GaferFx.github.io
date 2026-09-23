@@ -37,6 +37,7 @@ const translations = {
             'Your only video editor': 'Ваш последний режиссер монтажа',
             'Contact me:': 'Свяжитесь со мной:',
             'My Recent Works': 'Мои последние работы',
+            'My Projects': 'Мои проекты',
             'Telegram': 'Телеграм',
             'Telegram blog': 'Телеграм блог'
         }

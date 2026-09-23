@@ -6,6 +6,199 @@
     <title>GaferFx ⁂</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
+    <style>
+        /* Черновик второго блока: сохранены фон и автотема основного сайта. */
+        .projects-section {
+            box-sizing: border-box;
+            min-height: 65vh;
+            padding: clamp(5rem, 10vw, 9rem) 1.5rem;
+            justify-content: flex-start;
+            align-items: stretch;
+            overflow: visible;
+        }
+        .projects-inner {
+            width: min(100%, 1200px);
+            margin: 0 auto;
+        }
+        .projects-inner h2 {
+            margin: 0;
+            color: var(--text);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            line-height: 1.15;
+            font-weight: 800;
+            text-align: center;
+        }
+        .projects-section + .gradient-transition-second { display: none; }
+        /* Full-width rows with a subtle blurred backdrop and no gaps between projects. */
+        .projects-list {
+            width: 100vw;
+            margin-top: clamp(2.5rem, 6vw, 5rem);
+            margin-left: calc(50% - 50vw);
+        }
+        .project {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            background: var(--background);
+        }
+        .project::before, .project::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        .project::before {
+            background: var(--project-image) center / cover no-repeat;
+            filter: blur(16px);
+            transform: scale(1.08);
+            opacity: .55;
+            z-index: -2;
+        }
+        .project::after {
+            background: rgba(211, 211, 211, .38);
+            z-index: -1;
+        }
+        @media (prefers-color-scheme: dark) {
+            .project::after { background: rgba(26, 26, 26, .42); }
+        }
+        .project + .project { margin-top: 0; }
+        .project + .project .project-content { border-top: 1px solid rgba(128, 128, 128, .25); }
+        .project-content {
+            width: min(100% - 3rem, 1100px);
+            margin: 0 auto;
+            padding: clamp(2rem, 5vw, 4rem) 0;
+            display: grid;
+            grid-template-columns: minmax(0, 480px) minmax(0, 1fr);
+            align-items: center;
+            gap: clamp(2rem, 5vw, 5rem);
+        }
+        .project-media {
+            position: relative;
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #111;
+            border: 0;
+            padding: 0;
+            cursor: pointer;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, .2), 0 8px 24px rgba(0, 0, 0, .2);
+        }
+        .project-media img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(1.12) contrast(1.08) brightness(1.04);
+            transition: transform .35s ease, filter .35s ease;
+        }
+        .project-media:hover img { transform: scale(1.035); filter: saturate(1.18) contrast(1.12) brightness(1.08); }
+        .provider-badge {
+            position: absolute;
+            right: .8rem;
+            bottom: .8rem;
+            z-index: 2;
+            width: 2.5rem;
+            height: 2rem;
+            display: grid;
+            place-items: center;
+            border-radius: .5rem;
+            background: rgba(0, 0, 0, .78);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+        }
+        .provider-badge svg { display: block; width: 1.75rem; height: 1.25rem; }
+        .project-media:focus-visible, .project-title a:focus-visible {
+            outline: 2px solid var(--link);
+            outline-offset: 4px;
+        }
+        .player-modal[hidden] { display: none; }
+        .player-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: grid;
+            place-items: center;
+            padding: 1.25rem;
+            background: rgba(0, 0, 0, .84);
+        }
+        .player-dialog {
+            position: relative;
+            width: min(100%, 1100px);
+            aspect-ratio: 16 / 9;
+            background: #000;
+            box-shadow: 0 20px 70px rgba(0, 0, 0, .5);
+        }
+        .player-dialog iframe { width: 100%; height: 100%; border: 0; display: block; }
+        .player-close {
+            position: absolute;
+            z-index: 2;
+            right: .75rem;
+            top: .75rem;
+            width: 2.25rem;
+            height: 2.25rem;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .72);
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+        body.player-open { overflow: hidden; }
+        .project-title {
+            margin: 0;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--text);
+        }
+        .project-title a { display: inline; margin: 0; color: inherit; }
+        .project-title a:hover { color: var(--link); }
+        .project-title button { border: 0; padding: 0; background: none; font: inherit; color: inherit; cursor: pointer; text-align: left; }
+        .project-title button:hover { color: var(--link); }
+        @media (max-width: 700px) {
+            .project-content {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+        }
+        .site-footer {
+            padding: clamp(1rem, 2vw, 1.75rem) 1.5rem 1.25rem;
+            text-align: center;
+            color: var(--text);
+            background: var(--background);
+            position: relative;
+            z-index: 3;
+        }
+        .signature {
+            display: block;
+            width: min(100%, 220px);
+            height: auto;
+            margin: 0 auto .25rem;
+            opacity: 1;
+        }
+        .footer-meta {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: .65rem;
+            color: var(--text);
+            line-height: 1.2;
+        }
+        .footer-caption,
+        .footer-dates {
+            margin: 0;
+            font-size: .75rem;
+            font-weight: 400;
+        }
+        .footer-dates {
+            color: var(--text-secondary);
+            letter-spacing: .08em;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .project-media img { transition: none; }
+        }
+    </style>
 </head>
 
 <body>
@@ -63,50 +256,122 @@
     <!-- Gradient Transition -->
     <div class="gradient-transition-first"></div>
 
-    <section class="video-section">
-        <h2 style="margin-bottom: 2rem; color: var(--text);">My Recent Works</h2>
-        <div class="video-section">
-            <div class="video-grid">
-                <div class="video-item">
-                    <a href="https://youtube.com/your-link-1" target="_blank">
-                        <img src="preview1.jpg" alt="Video 1">
-                        <span class="video-overlay">
-                            Video Title 1
-                        </span>
-                    </a>
-                </div>
-                <div class="video-item">
-                    <a href="https://youtube.com/your-link-2" target="_blank">
-                        <img src="preview2.jpg" alt="Video 2">
-                        <span class="video-overlay">
-                            Video Title 2
-                        </span>
-                    </a>
-                </div>
-                <div class="video-item">
-                    <a href="https://youtube.com/your-link-3" target="_blank">
-                        <img src="preview3.jpg" alt="Video 3">
-                        <span class="video-overlay">
-                            Video Title 3
-                        </span>
-                    </a>
-                </div>
-                <div class="video-item">
-                    <a href="https://youtube.com/your-link-4" target="_blank">
-                        <img src="preview4.jpg" alt="Video 4">
-                        <span class="video-overlay">
-                            Video Title 4
-                        </span>
-                    </a>
-                </div>
-            </div>
+    <section class="video-section projects-section" aria-labelledby="projects-title">
+        <div class="projects-inner">
+            <h2 id="projects-title" data-i18n="My Projects">My Projects</h2>
+            <div class="projects-list" id="projects-list" aria-live="polite"></div>
         </div>
-
     </section>
 
-    <!-- Gradient Transition -->
-    <div class="gradient-transition-second"></div>
+    <!-- Footer -->
+    <footer class="site-footer">
+        <img class="signature" src="signature_slim.png" alt="GaferFx signature" loading="lazy">
+        <div class="footer-meta">
+            <p class="footer-caption">GaferFx</p>
+            <p class="footer-dates">2018–2026</p>
+        </div>
+    </footer>
+
+    <div class="player-modal" id="player-modal" role="dialog" aria-modal="true" aria-labelledby="player-title" hidden>
+        <div class="player-dialog">
+            <button class="player-close" type="button" aria-label="Закрыть плеер">×</button>
+            <iframe id="player-frame" title="Видео" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/i18next@21.6.10/dist/umd/i18next.min.js"></script>
     <script src="script.js"></script>
-<body>
+    <script>
+        const projectsList = document.querySelector('#projects-list');
+        const playerModal = document.querySelector('#player-modal');
+        const playerFrame = document.querySelector('#player-frame');
+        const playerClose = document.querySelector('.player-close');
+        let lastFocusedElement;
+
+        const providerLogos = {
+            youtube: '<svg viewBox="0 0 28 20" xmlns="http://www.w3.org/2000/svg" focusable="false"><rect width="28" height="20" rx="5" fill="#FF0033"/><path d="M11 5.5 19 10l-8 4.5z" fill="#fff"/></svg>',
+            vkvideo: '<strong>VK</strong>',
+            vimeo: '<strong>V</strong>',
+            rutube: '<strong>R</strong>',
+            twitch: '<strong>Tw</strong>',
+            dailymotion: '<strong>D</strong>',
+            browser: '<span aria-hidden="true">↗</span>'
+        };
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
+        }
+
+        function providerIdFromUrl(url, provider) {
+            try {
+                const parsed = new URL(url);
+                if (provider === 'youtube') return parsed.searchParams.get('v') || parsed.pathname.split('/').filter(Boolean).pop();
+                if (provider === 'vimeo' || provider === 'rutube' || provider === 'dailymotion') return parsed.pathname.split('/').filter(Boolean).pop();
+                return '';
+            } catch { return ''; }
+        }
+
+        function createProject(project) {
+            if (project.hidden) return '';
+            const provider = project.provider || 'browser';
+            const videoId = providerIdFromUrl(project.url, provider);
+            const canEmbed = project.embed !== false && ['youtube', 'vimeo', 'rutube', 'twitch', 'dailymotion'].includes(provider) && videoId;
+            const action = canEmbed ? 'button' : 'link';
+            const target = canEmbed ? '' : ' target="_blank" rel="noopener noreferrer"';
+            const mediaTag = canEmbed ? 'button' : 'a';
+            const providerLogo = providerLogos[provider] || providerLogos.browser;
+            const image = project.thumbnail || (provider === 'youtube' && videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : '');
+            const mediaAttributes = canEmbed ? `type="button" data-provider="${escapeHtml(provider)}" data-video-id="${escapeHtml(videoId)}" data-title="${escapeHtml(project.title)}"` : `href="${escapeHtml(project.url)}"${target}`;
+            return `<article class="project" style="--project-image: url('${escapeHtml(image)}')"><div class="project-content"><${mediaTag} class="project-media" ${mediaAttributes} aria-label="Открыть ${escapeHtml(project.title)}"><img src="${escapeHtml(image)}" alt="${escapeHtml(project.title)} — превью видео" loading="lazy"><span class="provider-badge" aria-label="${escapeHtml(provider)}">${providerLogo}</span></${mediaTag}><h3 class="project-title">${canEmbed ? `<button type="button" data-provider="${escapeHtml(provider)}" data-video-id="${escapeHtml(videoId)}" data-title="${escapeHtml(project.title)}">${escapeHtml(project.title)}</button>` : `<a href="${escapeHtml(project.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.title)}</a>`}</h3></div></article>`;
+        }
+
+        function openPlayer(button) {
+            const provider = button.dataset.provider;
+            const videoId = button.dataset.videoId;
+            const title = button.dataset.title;
+            const builders = {
+                youtube: id => `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`,
+                vimeo: id => `https://player.vimeo.com/video/${id}?autoplay=1`,
+                rutube: id => `https://rutube.ru/play/embed/${id}/?autoplay=1`
+            };
+            if (!builders[provider] || !videoId) return;
+            lastFocusedElement = document.activeElement;
+            playerFrame.title = title;
+            playerFrame.src = builders[provider](videoId);
+            playerModal.hidden = false;
+            document.body.classList.add('player-open');
+            playerClose.focus();
+        }
+
+        function closePlayer() {
+            playerModal.hidden = true;
+            playerFrame.src = '';
+            document.body.classList.remove('player-open');
+            if (lastFocusedElement) lastFocusedElement.focus();
+        }
+
+        async function loadProjects() {
+            try {
+                const response = await fetch('projects.json', { cache: 'no-store' });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                projectsList.innerHTML = (await response.json()).map(createProject).join('');
+                projectsList.querySelectorAll('[data-video-id]').forEach(button => {
+                    button.addEventListener('click', () => openPlayer(button));
+                });
+            } catch (error) {
+                projectsList.innerHTML = '<p class="projects-error">Projects could not be loaded.</p>';
+                console.error('Projects loading failed:', error);
+            }
+        }
+
+        loadProjects();
+        playerClose.addEventListener('click', closePlayer);
+        playerModal.addEventListener('click', event => {
+            if (event.target === playerModal) closePlayer();
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !playerModal.hidden) closePlayer();
+        });
+    </script>
+</body>
 </html>

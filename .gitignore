@@ -1,0 +1,9 @@
+.DS_Store
+__pycache__
+node_modules
+venv
+.venv
+
+# Generated locally by Bun; GitHub Actions creates it during deployment.
+projects.json
+
