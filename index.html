@@ -34,7 +34,9 @@
     <main>
     <!-- Первый экран -->
     <div class="first-screen">
-        <video autoplay muted loop playsinline id="myVideo" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="metadata" id="myVideo" aria-hidden="true">
+            <source src="./public/hero-av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'>
+            <source src="./public/hero.webm" type='video/webm; codecs="vp9"'>
             <source src="./public/hero.mp4" type="video/mp4">
         </video>
         <div class="scroll-indicator"></div>
@@ -74,7 +76,23 @@
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-art">
-            <img class="signature" src="./public/signature.png" srcset="./public/signature@2x.png 2x" alt="GaferFx signature" loading="lazy">
+            <video
+                class="signature"
+                width="512"
+                height="196"
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="metadata"
+                poster="./public/signature@2x.png"
+                aria-label="GaferFx signature"
+            >
+                <source src="./public/video/signature@2x-hevc.mov" type="video/quicktime">
+                <source src="./public/video/signature@2x.webm" type="video/webm">
+                <img src="./public/signature.png" srcset="./public/signature@2x.png 2x" alt="GaferFx signature" loading="lazy">
+
+            </video>
         </div>
         <div class="footer-meta">
             <div class="footer-badges footer-badges-left">
