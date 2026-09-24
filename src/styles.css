@@ -260,6 +260,7 @@ svg {
 
 /* Карточка проекта: сам элемент является a / button / div. */
 .project {
+    max-width: fit-content;
     width: 100%;
     position: relative;
     isolation: isolate;
