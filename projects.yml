@@ -17,6 +17,7 @@
 
 - url: https://vk.ru/video-19793516_456241533?list=bafddf0c33539eb2db
   title: '«Кубком ФТР II» среди взрослых в Москве"'
+  thumbnail: https://example.com/my-thumbnail.jpg
 
 - url: https://youtu.be/FAyxfopScn8
   title: 'Сергей Арутюнов, Настя Макаревич & группа "Лицей", Dj Nejtrino, Иван Воробьев - Школа № 7'
@@ -26,6 +27,12 @@
   
 - url: https://youtu.be/VBWcR674FRk
   title: 'Сергей Арутюнов, Валерий Сюткин, Иван Воробьев - Я то что надо'
+
+- url: https://youtube.com/watch?v=rrlz20lpbfE
+  title: 'НЕПРИЯТНАЯ ЗАПОВЕДЬ'
+
+- url: https://youtube.com/watch?v=Cew8SQ1WJFE&list=PLk3H1Rc-UHo6XUD4j7vFNaks1ufxl5LRg
+  title: 'Шоу "Битва экспериментов"'
 
 - url: https://youtu.be/p3TEaBwFuks
   title: 'Сергей АРУТЮНОВ, ASTERO - Тучи!'
