@@ -77,6 +77,10 @@ try {
   console.log(`Built site → dist/`);
 } catch (error) {
   await rm(genEntry, { force: true });
-  console.error(`build: ${error instanceof Error ? error.message : error}`);
+  if (error instanceof AggregateError) {
+    for (const entry of error.errors) console.error(`  ${entry}`);
+  } else {
+    console.error(error instanceof Error ? error.stack : error);
+  }
   process.exit(1);
 }

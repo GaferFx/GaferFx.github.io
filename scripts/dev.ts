@@ -48,6 +48,7 @@ watch(root, (_event, filename) => {
 });
 
 const server = Bun.serve({
+  hostname: '0.0.0.0',
   port,
   async fetch(req) {
     const path = decodeURIComponent(new URL(req.url).pathname);
