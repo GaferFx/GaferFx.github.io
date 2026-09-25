@@ -171,10 +171,11 @@
 
     <dialog class="player-modal" id="player-modal" aria-label="Видеоплеер">
         <div class="player-dialog">
-            <iframe id="player-frame" title="Видео" allow="autoplay; encrypted-media; picture-in-picture"
-                allowfullscreen></iframe>
+            <a class="player-title" id="player-title" target="_blank" rel="noopener noreferrer"></a>
             <button class="player-close" type="button" commandfor="player-modal" command="close"
                 aria-label="Закрыть плеер">×</button>
+            <iframe id="player-frame" title="Видео" allow="autoplay; encrypted-media; picture-in-picture"
+                allowfullscreen>Ваш браузер не поддерживает встроенное видео.</iframe>
         </div>
     </dialog>
 

@@ -89,7 +89,7 @@ export function renderProject(project: ResolvedProject): string {
     const { title, url, provider, isImage, embed, image, background, aspectRatio } = project;
     const tag = embed ? "button" : url ? "a" : "div";
     const action = embed
-        ? `type="button" data-embed="${escapeHtml(embed)}"`
+        ? `type="button" data-embed="${escapeHtml(embed)}" data-url="${escapeHtml(url)}"`
         : url
         ? `href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer"`
         : "";

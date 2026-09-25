@@ -4,6 +4,7 @@ const projectsList = document.querySelector('#projects-list');
 const playerModal = document.querySelector('#player-modal');
 const playerFrame = document.querySelector('#player-frame');
 const playerClose = document.querySelector('.player-close');
+const playerTitle = document.querySelector('#player-title');
 
 new IntersectionObserver((entries) => {
     entries.forEach(entry => header.classList.toggle('visible', !entry.isIntersecting));
@@ -43,6 +44,9 @@ function openPlayer(button) {
     playerFrame.title = title;
     // "{host}" — для эмбедов вроде Twitch, которым нужен домен страницы
     playerFrame.src = embed.replaceAll('{host}', location.hostname);
+    // Заголовок — заодно запасной выход, если эмбед не загрузился
+    playerTitle.textContent = title;
+    if (button.dataset.url) playerTitle.href = button.dataset.url;
     playerModal.setAttribute('aria-label', title);
     playerModal.showModal();
     document.body.classList.add('player-open');
@@ -53,6 +57,8 @@ playerModal.addEventListener('close', () => {
     playerFrame.removeAttribute('src');
     playerFrame.title = 'Видео';
     playerModal.setAttribute('aria-label', 'Видеоплеер');
+    playerTitle.textContent = '';
+    playerTitle.removeAttribute('href');
     document.body.classList.remove('player-open');
 });
 
