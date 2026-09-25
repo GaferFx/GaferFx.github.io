@@ -35,18 +35,14 @@ getIpCountry().then(country => {
     });
 });
 
-const embedBuilders = {
-    youtube: id => `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`,
-    vimeo: id => `https://player.vimeo.com/video/${id}?autoplay=1`,
-    rutube: id => `https://rutube.ru/play/embed/${id}/?autoplay=1`
-};
 
 function openPlayer(button) {
-    const build = embedBuilders[button.dataset.provider];
-    if (!build || !button.dataset.videoId) return;
+    const embed = button.dataset.embed;
+    if (!embed) return;
     const title = button.querySelector('.project-title')?.textContent || 'Видео';
     playerFrame.title = title;
-    playerFrame.src = build(button.dataset.videoId);
+    // "{host}" — для эмбедов вроде Twitch, которым нужен домен страницы
+    playerFrame.src = embed.replaceAll('{host}', location.hostname);
     playerModal.setAttribute('aria-label', title);
     playerModal.showModal();
     document.body.classList.add('player-open');
@@ -61,7 +57,7 @@ playerModal.addEventListener('close', () => {
 });
 
 projectsList.addEventListener('click', event => {
-    const button = event.target.closest('[data-video-id]');
+    const button = event.target.closest('[data-embed]');
     if (button) openPlayer(button);
 });
 

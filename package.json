@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun scripts/dev.ts",
+    "dev": "bun --watch scripts/dev.ts",
     "build": "bun scripts/build.ts"
   },
   "devDependencies": {
