@@ -1,5 +1,5 @@
 # Проекты отображаются сверху вниз в этом же порядке.
-# Для видео обязательны url и title.
+# Для видео обязателен url; title подтянется из метаданных, но лучше задать свой.
 # Для статичной картинки обязательны image и title.
 # provider, thumbnail, embed и hidden — необязательные.
 # Пример картинки:
@@ -22,15 +22,14 @@
   title: 'Лицо не черновик! Честный подкаст о косметологии'
 
 - url: https://vk.ru/video-19793516_456241533?list=bafddf0c33539eb2db
-  title: '«Кубком ФТР II» среди взрослых в Москве"'
-  thumbnail: https://example.com/my-thumbnail.jpg
+  title: '«Кубком ФТР II» среди взрослых в Москве'
 
 - url: https://youtu.be/FAyxfopScn8
   title: 'Сергей Арутюнов, Настя Макаревич & группа "Лицей", Dj Nejtrino, Иван Воробьев - Школа № 7'
 
 - image: https://resizer.mail.ru/p/60227d76-11f9-5637-8dc2-e63bac072aff/AQAzyO-J9pQ2lrJnD7wVS40IAd3HtcIH1EgumwYS1WriJmL_MzMOq6MufM7jJ7oU7rBv1FkZTKOYC29_MJdEI24CCWA.png
   title: 'Участник ПМЭФ 2026'
-  
+
 - url: https://youtu.be/VBWcR674FRk
   title: 'Сергей Арутюнов, Валерий Сюткин, Иван Воробьев - Я то что надо'
 
@@ -56,7 +55,7 @@
 - url: https://academy.kaspersky.com/course/cyberhygiene
   image: https://technave.com/data/files/article/202511100741361963.jpg
   title: 'Онлайн-курс «Кибергигиена» от Касперского ENG'
-  
+
 - url: https://vimeo.com/1052995949?share=copy
   title: 'ЖЕЛАНИЕ | короткометражный фильм'
 

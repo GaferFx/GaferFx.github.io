@@ -7,3 +7,8 @@ venv
 # Build output; GitHub Actions recreates it during deployment.
 dist/
 index.build.html
+index.gen.html
+
+# Скачанные превью видео и метаданные провайдеров — пересоздаются на билде.
+public/thumbnails/
+.cache/
